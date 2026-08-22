@@ -1,0 +1,33 @@
+# Data (raw CSV is included with this delivery; ignore future downloads/processed artifacts)
+data/processed/*
+!data/processed/.gitkeep
+
+# Models
+models/*.pkl
+models/*.joblib
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.venv
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Notebook export / Cursor scratch
+.virtual_documents/
+reports/*auto-R.pdf
+*.zip

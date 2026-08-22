@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 460" role="img" aria-labelledby="bannerTitle bannerDesc">
+  <title id="bannerTitle">Customer Churn Prediction</title>
+  <desc id="bannerDesc">A Data-Driven Retention Strategy for Subscription Telecom. XGBoost + Optuna Tuning, SHAP Interpretability, Business ROI Modeling. Sileshi Hirpa  Data Science and Business Analytics, Arizona State University.</desc>
+  <rect width="1280" height="460" fill="#6E1F2C"/>
+  <text x="72" y="118" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', Times, serif" font-size="48" font-weight="700">Customer Churn Prediction</text>
+  <text x="72" y="168" fill="#F4EDEE" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22">A Data-Driven Retention Strategy for Subscription Telecom</text>
+  <text x="72" y="206" fill="#D7C4C8" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-style="italic">XGBoost + Optuna Tuning  ·  SHAP Interpretability  ·  Business ROI Modeling</text>
+  <line x1="72" y1="318" x2="560" y2="318" stroke="#E8D6D9" stroke-width="1.25"/>
+  <text x="72" y="362" fill="#FFFFFF" font-family="Georgia, 'Times New Roman', Times, serif" font-size="26" font-weight="700">Sileshi Hirpa</text>
+  <text x="72" y="394" fill="#D7C4C8" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15">Data Science  ·  Business Analytics</text>
+  <text x="72" y="420" fill="#D7C4C8" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15">Arizona State University</text>
+</svg>
