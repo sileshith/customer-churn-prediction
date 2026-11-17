@@ -1,6 +1,6 @@
 # Data Science Interview Study Guide
 
-Prepared from the files in this workspace for **Sileshi Hirpa** (Data Science and Business Analytics, Arizona State University). Every project number below comes from `customer-churn-prediction`: the notebook `notebooks/01_churn_analysis.ipynb`, the modules in `src/`, the briefing builders in `reports/`, and `README.md`. Standard interview topics that do not appear in those files are labeled **Gap** so you do not claim experience you cannot open on your machine.
+Prepared for **Sileshi Hirpa** (Data Science and Business Analytics, Arizona State University). The cloud machine that holds this repository has no `Desktop` folder and no `ASU` folder. A second pass listed every repository on the connected GitHub account `sileshith` and read those codebases. Numbers below come from those repositories' READMEs, model cards, and SQL. Where the public site and a repository disagree, the repository is the number to memorize. Topics with no file behind them stay labeled **Gap**.
 
 ---
 
@@ -8,9 +8,9 @@ Prepared from the files in this workspace for **Sileshi Hirpa** (Data Science an
 
 ### What was actually in the workspace
 
-A recursive scan of `/workspace` found **one repository**, not a `Desktop/ASU` course tree. There are no syllabi, no course-code folders (no CIS, WPC, STP, or IEE directories), no homework sets, no SQL scripts, no Excel workbooks, no PySpark jobs, and no research notes on fraud, grid risk, or graph / scientific ML.
+`/workspace` is only `customer-churn-prediction`. There is no `~/Desktop`, no `/Desktop/ASU`, and no course-homework tree (no CIS or WPC folders) on this machine. The private repository `sileshith/edge-state-visibility-code` is listed on the account and could not be cloned from this environment.
 
-Git history is three commits on `main`, all about publishing this portfolio project. Author line in the README: Sileshi Hirpa, Arizona State University.
+The public portfolio that matches the requested fraud, grid, PySpark, Excel, and GNN material is on GitHub. One file names a course: `GNN-Stability-Analysis` is **STP 499, Individualized Instruction, Arizona State University**, faculty advisor Dr. Yixuan He. The civic-budget README says it applies concepts from ASU Excel and database coursework and does not reproduce answer keys.
 
 | Item | Location | What it is |
 | --- | --- | --- |
@@ -68,30 +68,89 @@ This is a **decision memo with a model attached**, which is rarer in student por
 7. **SHAP is checked**, not just plotted. Additivity to 2.86e-06. Global, beeswarm direction, one waterfall, and a cohort split that changes the offer: term upgrades fit month-to-month accounts; people already on a term are protected by that term.
 8. **Two different operational objects.** The 282-person ranking is who to call. The 491-person flag is exposure. The 3.6× multiple is a scenario with a replaceable 35% save rate. The deck's speaker notes say the same thing.
 
-### What a full ASU folder would usually add, and is absent here
+### Portfolio repositories read in the second pass
 
-Fraud detection, energy or grid risk, PySpark, GNN or SciML research papers, SQL case work, Excel dashboards, and a graded statistics sequence (t-tests, ANOVA write-ups, designed experiments) are **not in this workspace**. If those projects live under `Desktop/ASU` on another machine, open that folder in Cursor and rerun this pass. Until then, interview answers about those topics stay conceptual. Do not narrate them as personal projects.
+Cloned shallow from `github.com/sileshith` on November 17, 2026. Quote the repository, not the older bullets on `sileshith.github.io`, when the two disagree.
+
+| Repository | Domain | Stack actually in the repo | Result you can defend |
+| --- | --- | --- | --- |
+| `customer-churn-prediction` | Telecom retention | pandas, scikit-learn, XGBoost, Optuna, SHAP, ipywidgets | Holdout PR-AUC **0.658**. Top 20% captures **190/374** leavers. See the locked table above. |
+| `gridguard-ai` | Synthetic transmission contingency screening | PySpark, Spark ML (logistic, random forest, GBT), Dataproc, scenario-grouped splits, scenario-cluster bootstrap | Local 1M validation: GBT PR-AUC **0.9247** vs loading baseline **0.6390**. Capture at 20% review **95.1%** vs **78.8%** (gain **+16.3 pp**, bootstrap 95% interval **+15.75 to +16.72 pp** on 865 scenarios, 1,000 resamples). Fresh Dataproc validation PR-AUC: LR 0.8555, RF 0.8683, GBT **0.9250**. Prevalence 117,193 / 1,000,000 = **11.72%**. **The held-out 1M test is unevaluated.** Synthetic IEEE 118-bus DC labels, not a real grid. |
+| `california_grid_analysis` | EIA-930 demand, Jan–Apr 2026 | Airflow ELT, PostgreSQL/SQLite, LightGBM, Prophet, Granger tests, Tableau | 158,182 raw rows, 13,020 California authority-hours (BANC, CISO, IID, LDWP, TIDC). LightGBM MAPE **3.29%** on four authorities vs naive **11.05%** and Prophet **16.8%**. Spatial features moved MAPE from 3.29% to **3.47%** (worse). **75** hours with stress index ≥ 90. LDWP raw MAPE **303%**; adjusted MAPE for demand ≥ 250 MW is **2.39%**. Granger: **20/20** pairs. Average correlation **0.484**. |
+| `fraudscope` | Synthetic fraud review workbench | Point-in-time features, isotonic calibration, logistic champion, PyTorch temporal GNN candidates, FastAPI, React/TypeScript workbench | Live policy is **logistic**, not a GNN. Seed-42 holdout: 11,945 rows, fraud rate **6.14%**, AP **0.455**, ROC-AUC **0.827**, Brier **0.041**, recall in the top 5% **47.5%**, frozen threshold **0.511**. Three-seed means: gradient boosting AP 0.486, no-edge MLP 0.494, relational aggregation 0.497. **No GNN won validation cost** (MLP won seeds 42 and 73, boosting won 101). Real IEEE-CIS scores are **unmeasured**. |
+| `GNN-Stability-Analysis` | STP 499 research | PyTorch 2.12, PyG 2.7, PyGSD, SLURM on ASU Sol | Studies sign flips, direction reversals, and edge deletion for MSGNN, MagNet, SSSNET, SGCN. Verified today: imports, constructors, finite parameters, CPU instantiation. **Not yet verified:** forward-pass correctness, training, robustness, or theory–experiment agreement. Legacy Cora numbers are excluded from manuscript evidence. |
+| `automated-superstore-executive-reporting` | Sample Superstore, 9,994 lines | Excel, Power Query (M), PivotTables, star schema, Python reconciliation | Sales **$2,297,200.86**, profit **$286,397.02**, margin **12.47%** (profit/sales, not an average of row margins). 5,009 orders. Discount bands `>32–50%` and `>50%` associate with about **−$46,057** and **−$76,559** profit. Tables are the largest loss subcategory at **−$17,725**. 11/11 KPI controls pass. 25 source-to-staging checks pass. |
+| `civic-operating-budget-analysis` | Synthetic city budget | Excel (`SUMIFS`, scenarios), SQLite, recursive CTE, `DENSE_RANK` | Base scenario, seed 407409. FY 2025–26 expense budget **$7,220,000**, actual **$7,545,050**, variance **$325,050**. FY 2027–29 modeled expense **$16,729,293**, funding shortfall **$786,463**. 75 workbook forecasts match SQL. Fictional. Not the City of Alameda. |
+| `sf-incident-forecasting` | DataSF reported incidents, 2018–2025 | pandas, statsmodels SARIMA and ETS, rolling-origin backtests, Streamlit | **942,000+** incidents. Across six origins, SARIMA mean MASE **0.80**, MAPE **5.78%**, MAE **432**, versus seasonal-naive MASE **1.97**, MAPE **14.14%**, MAE **1,063**. ETS is essentially tied (MASE 0.81). Live app: `sf-incident-forecasting.streamlit.app`. Forecasts are of **reported** incidents, not a patrol plan. |
+| `sf-rec-park-analytics` | Synthetic permits on real DataSF facility locations | pandas, SQLite, Streamlit, Plotly | 12,000 applications through 2026-09-30. Resolved turnaround **10.09** calendar days. **85.72%** within target. 17 overdue pending. Modeled revenue **$2,943,190**. Transactions are synthetic. |
+| `gradientgrove` | SciML lessons | Next.js, TypeScript, Pyodide, Monaco | Teaching app: pixels, edges, a fruit classifier. No experiment result to quote. |
+| `sileshith.github.io` | Portfolio site | Hugo | Experience page: Undergraduate Researcher, GNN robustness, ASU, May 2026–present. Project blurbs are shorter and, in a few places, staler than the repos. See the mismatch list below. |
+
+### Numbers on the public site that the current repos do not support
+
+Memorize the repository figures. If an interviewer has the website open, correct the record.
+
+| Site claim | What the current repo says |
+| --- | --- |
+| Churn project "deployed a live Streamlit rescoring dashboard" | `requirements.txt` pins Streamlit. The notebook UI is ipywidgets. There is no `app/` directory. |
+| LightGBM MAPE "1.87%–4.33%" | README table: CISO 2.18%, BANC 2.51%, TIDC 2.84%, IID 2.92%, four-authority average **3.29%**. LDWP raw MAPE is 303% and is called out separately. `docs/resume_bullets.md` in that repo is a draft with still other targets (Prophet 12.9%, LightGBM 8%). Do not recite the draft. |
+| SARIMA "3.78% MAPE" and "78.9% MAE" improvement | That string is not in the current forecasting repo. The model card's rolling-origin means are MAPE **5.78%** and MASE **0.80**. The README says rolling origin replaced reliance on a single favorable holdout. |
+| Fraud detection "coming soon" on IEEE-CIS | `fraudscope` exists. It is explicit that IEEE-CIS performance is unmeasured and that the serving model is logistic regression on synthetic data. |
+
+### What is still missing
+
+Graded homework, lecture notes, and exam solutions from a `Desktop/ASU` tree were not on this machine. ANOVA write-ups and a completed randomized experiment are still absent. The STP 499 repository is an active research implementation, not a finished paper. Do not describe constructor smoke tests as a robustness result.
 
 ---
 
 ## 1. Personal skill inventory
 
-### Ranked strengths, from the files
+### Ranked strengths, across the portfolio
 
 | Rank | Skill | Evidence you can open |
 | --- | --- | --- |
-| 1 | Turning a classifier into an action under a capacity constraint | Top 20% list: 282 people, 190 of 374 leavers, 2.5× random. `top_k_capture` in `src/business_impact.py`. |
-| 2 | Choosing a metric that matches the decision | PR-AUC over accuracy and over ROC-AUC. Stated in §1 and used as the Optuna objective (`scoring="average_precision"`). |
-| 3 | Leakage control and reproducible preprocessing | `audit_leakage`, drop `customerID`, `Pipeline(preprocessor → classifier)`, `random_state=42`. |
-| 4 | Imbalance handling with an eye on calibration | `class_weight="balanced"`, `scale_pos_weight≈2.77`, explicit rejection of resampling, then a reliability diagram. |
-| 5 | Model selection with a simple baseline kept honest | Logistic wins the untuned bake-off (0.635). Tuned XGBoost only ships after it clears 0.658 on holdout. |
-| 6 | Hyperparameter search that cannot see the test set | 30-trial TPE, 4-fold `StratifiedKFold` on train, shallow regularized tree. |
-| 7 | Explainability a retention agent can say out loud | TreeSHAP. "Bill high relative to tenure, month-to-month, fiber, electronic check." |
-| 8 | Separating measured results from assumptions | 50.8% capture is measured. 3.6× is not. Break-even ≈ 10%. |
-| 9 | Feature engineering aimed at a mechanism | `ChargeRatio` is almost uncorrelated with `MonthlyCharges` (r = −0.04) and later outranks it in SHAP (12% vs 7%). |
-| 10 | Stakeholder writing | README executive summary, three-job table (call / flag / dollars), briefing deck with speaker notes. |
+| 1 | Ranking under a review budget | Churn top 20% (190/374). GridGuard capture at 20% (95.1% vs 78.8% loading). FraudScope recall inside a 5% review budget. Same decision shape, three domains. |
+| 2 | Choosing the metric that matches the decision | Churn: PR-AUC, no-skill line 0.265. GridGuard: PR-AUC plus capture@k, and pooled capture kept separate from per-scenario recall. Incidents: MASE, not a single MAPE. |
+| 3 | Leakage control | Churn: id screen, pipeline-fit preprocessor. GridGuard: split on `scenario_id` before joining outage rows. FraudScope: point-in-time features, two-day label delay, purged rows. California grid: lags shifted by the forecast horizon. |
+| 4 | Baselines that are allowed to win | Churn logistic beat untuned XGBoost. GridGuard loading is the simple baseline and is strong. FraudScope: no GNN won validation cost. California grid: spatial features and a GNN were rejected because MAPE got worse (3.29% → 3.47%). |
+| 5 | Calibration and threshold discipline | Churn Brier 0.162 and the 0.59 flag. FraudScope isotonic stage and frozen threshold 0.511. GridGuard: final 1M test left unevaluated on purpose. |
+| 6 | Excel as a governed reporting system | Superstore Power Query star schema, 11/11 KPI controls, margin defined as profit/sales. Civic `SUMIFS`, scenario switch, workbook reconciled to SQL on 75 forecasts. |
+| 7 | SQL beyond a tutorial | Civic recursive forecast CTE in integer cents. Rec-park SQLite measures (turnaround, backlog, overdue) with NULL for a zero denominator. California grid `high_priority_review_queue.sql` (stress index ≥ 90). |
+| 8 | Time-series evaluation | LightGBM vs naive vs Prophet on a time split. SARIMA vs ETS vs seasonal naive on six rolling origins. |
+| 9 | Spark at a stated scale | GridGuard: PySpark 4 on 1,000,000 scenario-outage rows, Dataproc rerun, seed-and-partition sensitivity for the random forest. |
+| 10 | Knowing what the research has not shown yet | STP 499: environment and constructors verified. Robustness results are not. FraudScope graph models are shadow scores. The serving model stays logistic. |
 
-### Tools with real use in this repo
+### Tools with real use
+
+The churn column is this repository. The other columns are the GitHub portfolio cloned in the second pass.
+
+| Tool | Where |
+| --- | --- |
+| pandas, NumPy, scikit-learn, matplotlib | Churn, FraudScope, both SF projects, California grid |
+| XGBoost, Optuna, SHAP | Churn |
+| PySpark / Spark ML, Dataproc | GridGuard |
+| LightGBM, Prophet, Airflow, PostgreSQL, Tableau | California grid |
+| statsmodels SARIMA and ETS, Streamlit | SF incident forecasting (this one is a real Streamlit app) |
+| SQLite, Streamlit, Plotly | SF Rec Park. Civic budget uses SQLite without Streamlit |
+| Excel, Power Query, PivotTables | Superstore workbook and civic workbook |
+| PyTorch, PyG | FraudScope temporal-graph candidates. STP 499 signed/directed GNN research on Sol |
+| FastAPI, React, TypeScript, Cloudflare | FraudScope workbench. Gradient Grove is Next.js + Pyodide |
+| pytest, GitHub Actions | California grid, civic budget, both SF projects, GridGuard, FraudScope |
+
+### Tools listed or implied, with no artifact
+
+This heading used to say Streamlit, SQL, and Excel had no artifact. That was true of the churn repo only.
+
+| Tool | Status after the portfolio pass |
+| --- | --- |
+| imbalanced-learn | Still pinned in the churn repo and unused there. FraudScope does not use SMOTE either. |
+| Streamlit inside the churn repo | Still unused there. The live Streamlit apps are the incident forecast and the rec-park permits dashboard. |
+| Plotly inside the churn repo | Unused there. Used in the SF dashboards. |
+| ANOVA write-up, randomized experiment | Still no file. |
+| Real IEEE-CIS score | Adapter exists. No measured score. |
+| Finished STP 499 robustness numbers | Not in the repository yet. |
+
+### Churn-repo tool detail
 
 | Tool | How you used it | How hard you can lean on it |
 | --- | --- | --- |
@@ -107,17 +166,6 @@ Fraud detection, energy or grid risk, PySpark, GNN or SciML research papers, SQL
 | joblib | Listed. No saved `.pkl` is committed (`.gitignore` excludes `models/`) | Mention only if you actually persist the pipeline |
 | Jupyter | The analysis notebook | Strong |
 
-### Tools listed or implied, with no artifact
-
-| Tool | Status |
-| --- | --- |
-| imbalanced-learn | Pinned in `requirements.txt`. Code comment and notebook both refuse SMOTE. That refusal is the experience. |
-| Streamlit | Pinned. No `app/` and no `streamlit` import. The conclusions say "promote `champion_pipeline` into `app/`." That is a next step. |
-| Plotly | Pinned. Figures in the repo are matplotlib. |
-| Excel, Power Query, PivotTables | No workbook in the tree. Treat as a study gap. |
-| SQL / PostgreSQL | No `.sql` file. Treat as a study gap. You can still write the churn questions in SQL from the CSV schema. |
-| PySpark, Spark SQL | Absent. |
-| Deep learning, GNN, SciML | Absent. |
 
 ### Statistical methods you actually applied
 
@@ -134,8 +182,12 @@ Fraud detection, energy or grid risk, PySpark, GNN or SciML research papers, SQL
 | Lift and capture | Decile churn rates, cumulative capture, top-k | This is your best "statistics in a business sentence." |
 | Scenario arithmetic | Exposure and ROI with stated assumptions | This is decision analysis. It is not a confidence interval. |
 | Single-row intervention on features | `what_if_simulator` | You can score a counterfactual **input**. You cannot call it a treatment effect. The README says so. |
+| Isotonic calibration | FraudScope fits isotonic regression on a later time stage, then freezes the threshold on validation cost | You did this on synthetic transactions. The churn project cited the method and left the champion uncalibrated. |
+| Scenario-cluster bootstrap | GridGuard, 1,000 paired resamples of 865 validation scenarios | The interval is for the capture gain on this synthetic benchmark. It does not fix selection optimism, and the final test is unevaluated. |
+| Granger causality | California grid, 20/20 authority pairs significant, average correlation 0.484 | Significance of a lead-lag test is not a forecasting win. Spatial features raised MAPE from 3.29% to 3.47%. |
+| MAPE, SMAPE, MAE, MASE | LightGBM and the SARIMA/ETS/naive backtest | MASE 0.80 means the model beat a seasonal naive on average. MAPE on LDWP is a trap because the denominator is small. |
 
-Methods named in the references that you cited but did not fit: Platt scaling and isotonic regression (Niculescu-Mizil & Caruana, 2005). You know when you would add them. You did not add them.
+The churn notebook cites Platt and isotonic scaling and does not fit them. FraudScope is the project where isotonic calibration is actually in the training path.
 
 ---
 
@@ -147,7 +199,7 @@ Each section has the concepts, questions with answers in your voice, one exercis
 
 ### 2.1 Advanced Excel
 
-**Status: Gap.** Nothing in the repo is an `.xlsx`. Study this until you can rebuild three artifacts you already trust: the contract rate table, the decile lift table, and the campaign cards.
+**Status: Demonstrated in two workbooks, not in the churn repo.** `automated-superstore-executive-reporting` is the Power Query and PivotTable system. `civic-operating-budget-analysis` is `SUMIFS`, scenarios, and a workbook that matches SQL. Use those when the interviewer asks for Excel. The churn cleaning steps below are extra practice.
 
 #### Concepts to master
 
@@ -204,7 +256,7 @@ The scored holdout has 1,409 rows with columns `y_true`, `y_proba`, `MonthlyChar
 
 ### 2.2 SQL and PostgreSQL
 
-**Status: Gap as a file.** The schema below is real. Write these queries until you can do them on a whiteboard.
+**Status: Demonstrated.** Civic budget has a recursive forecast CTE, `DENSE_RANK`, and `ROW_NUMBER`. Rec Park defines turnaround, backlog, and overdue in SQLite and returns NULL when a denominator is zero. California grid has PostgreSQL reporting queries, including the high-priority queue (`stress_index` at least 90, ordered by stress then demand). The churn schema below is still the whiteboard drill. Add one sentence that names the project you are borrowing the pattern from.
 
 Assume:
 
@@ -657,7 +709,7 @@ The EDA already says leavers are enriched for fiber (70% vs 35%) and that month-
 
 ### 2.8 Machine learning fundamentals
 
-**Status: Strong for supervised tabular classification, thresholding, calibration, and tree explanations. Absent: unsupervised projects, fraud, grid risk, PySpark, and GNN/SciML.** Answer those as knowledge. Do not adopt them as autobiography.
+**Status: Strong for supervised tabular classification, thresholding, calibration, tree explanations, a PySpark ranking pipeline, a synthetic fraud workbench, and an in-progress signed-GNN research repo.** Speak only to the measured slice of each project. GridGuard's final test is unevaluated. FraudScope's IEEE-CIS score does not exist. STP 499 has not yet shown robustness.
 
 #### Concepts to master
 
@@ -677,8 +729,8 @@ The EDA already says leavers are enriched for fiber (70% vs 35%) and that month-
 - **Calibration.** Reliability curve, quantile bins. Rank use vs probability use. Platt (logistic on the score) and isotonic (nonparametric, needs more data, can overfit) are the fixes you cited and did not apply.
 - **Explanations.** SHAP values for a tree are an exact additive decomposition of the raw margin in your check (error 2.86e-06). Mean absolute SHAP is not a causal effect and not a probability. Cohorts can reorder the levers. Global importance said contract. The worst row said ChargeRatio first (+0.66) and month-to-month second (+0.46), from a base margin near 0.02 up to 2.96 (the 95.1% score).
 - **Unsupervised, at interview depth.** k-means (scale first, k by silhouette or a business constraint, spherical clusters). Hierarchical clustering. PCA as a compression of correlated bill features, with the caveat that principal components are hard to offer a customer. You would rather keep ChargeRatio, which has a sentence.
-- **Fraud, if they ask generally.** Rare positives (often under 1%), extreme class weights or focal loss, PR-AUC, dollar-weighted cost of false positives vs false negatives, concept drift, label delay, and leakage through "chargeback already filed" fields. You have **no** fraud project in this workspace. The transferable piece from churn is: pick the metric that matches the cost ratio, audit leakage, and do not read an uncalibrated score as a probability.
-- **Big data, if they ask generally.** Your 7,043 rows do not need Spark. The point at which you would reach for PySpark is when the customer table no longer fits comfortably in memory or the joins against usage events are the bottleneck. The same split discipline applies: fit the pipeline on train partitions, and do not collect a global mean on the whole set before splitting. That is a knowledge answer, not a project you completed here.
+- **Fraud.** Your measured case is FraudScope at about a 6% synthetic rate, a 5% review budget, a two-day label delay, and isotonic calibration. Rare-event fraud under 1%, focal loss, and chargeback leakage are interview knowledge. Do not paste them onto FraudScope. The IEEE-CIS adapter has no score.
+- **Spark.** GridGuard is the project: 1,000,000 rows, scenario-grouped splits, Spark ML, a Dataproc rerun. The churn file is 7,043 rows and does not need Spark. The discipline that transfers is the same: do not compute a global statistic on all partitions before the split.
 
 #### Questions and answers
 
@@ -702,9 +754,9 @@ The EDA already says leavers are enriched for fiber (70% vs 35%) and that month-
 
 > A time-based split if I had signup and churn dates. I do not. Nested validation or at least a second seed, because one `random_state=42` cut is thin. A cost-weighted threshold instead of F1, since a missed leaver and a wasted $50 contact are not equal. Calibration if probabilities get multiplied by money. Rebuild engineered fields inside `src/` before any app. Try the interaction of contract and fiber only if top-20% capture moves. Leave SMOTE off unless a rarer label shows up and I can show the reliability diagram still makes sense.
 
-**Q6. Fraud question, answered honestly.**
+**Q6. Fraud question, answered from FraudScope.**
 
-> I have not shipped a fraud model in the work we are looking at. The pieces I would carry over are leakage audits, a precision-recall metric with the real base rate as the baseline, a cost matrix instead of F1, and a refusal to treat an uncalibrated score as a probability. Fraud would add label delay, a much smaller positive rate, and a stronger need to watch drift. I would not invent a fraud dataset to fill that sentence.
+> FraudScope ranks synthetic e-commerce transactions for a limited review queue. The serving model is a class of logistic regression with point-in-time features, a two-day label delay, a purge, and isotonic calibration on a later time slice. On the seed-42 holdout that is about 6.1% fraud, average precision is about 0.46, and the top 5% of scores catches about 47% of the synthetic fraud. I compared gradient boosting, an isolation forest, a no-edge MLP, and temporal graph models. The graph models are close on average precision and none of them won validation cost, so the workbench still saves decisions from the logistic policy. I have an IEEE-CIS adapter and I have not measured real IEEE-CIS performance. I will not quote a leaderboard number I do not have.
 
 #### Exercise
 
@@ -778,7 +830,7 @@ Interviewer: "Brier score is 0.162 against 0.195 for a constant forecast at the 
 
 ## 3. Project-based interview stories
 
-No fraud, grid-risk, PySpark, or GNN project is in this workspace. Do not tell those stories. You have one deep project. Split it into three STARs so a loop of three interviewers does not hear the same paragraph. Numbers are the holdout numbers above.
+Use a different project for each interviewer. Stories A–C are the churn holdout. Stories D–G are the other repositories. If two numbers conflict, the repository README or model card wins over the public website.
 
 ### Story A — The metric was the product
 
@@ -816,9 +868,57 @@ No fraud, grid-risk, PySpark, or GNN project is in this workspace. Do not tell t
 
 **What I would improve.** The pilot design in Section 2.5 of this guide: randomize inside the eligible band, power it for about a 10-point retention effect, and refuse to call historical churn labels a treatment group. A two-way data table on save rate and contact cost belongs next to the slide so finance can move the assumptions without me in the room.
 
-### If they ask for a second project
+### Story D — GridGuard, PySpark, and a test you refused to open
 
-> The workspace I can walk through line by line is this churn analysis. I will not brief a fraud model, a grid-risk model, or a graph-neural-net paper as if it were mine unless we open that repository. I can talk about how the same discipline would transfer: freeze a metric that matches the decision, audit leakage, keep a baseline, and separate a score's rank from its probability.
+**Situation.** Contingency lists are longer than the review team. The benchmark is a synthetic IEEE 118-bus DC power-flow set: 1,000,000 scenario-outage rows, 5,650 operating scenarios, 11.72% modeled thermal violations.
+
+**Task.** Rank which modeled outages a fixed review budget should see first, without leaking other outages from the same operating scenario into training.
+
+**Actions.** The split assigns scenario IDs to train, validation, or test, then joins outage rows back. Identifiers stay out of the feature vector. The nine predictors include pre-outage line loading, thermal rating, demand, renewable share, hour, topology (betweenness and degree), and line-outage sensitivity. Spark ML logistic regression, random forest, and gradient-boosted trees are compared with a one-feature loading rank. Evaluation is PR-AUC plus capture at 10% and 20% review, both pooled and within scenario. A 1,000-draw scenario-cluster bootstrap describes the gain. A fresh Dataproc run checks that the local GBT result is not a one-machine accident. The held-out 1M test stays sealed.
+
+**Result.** On local validation, GBT PR-AUC is 0.9247 against 0.6390 for loading. At a 20% review budget, capture is 95.1% versus 78.8%, a gain of 16.3 percentage points, with a bootstrap interval about +15.8 to +16.7 points. About 44% of positive scenarios still have at least one miss at that budget, and 875 modeled violations are still outside the pooled top 20%. Fresh Dataproc validation GBT PR-AUC is 0.9250. These are synthetic labels. They are not a measured reliability saving.
+
+**What I would improve.** Evaluate the frozen test once, under the written policy, instead of continuing to tune against validation. Say out loud that the bootstrap does not correct the fact that the loading baseline was chosen on the same validation rows.
+
+### Story E — FraudScope, and why the GNN did not ship
+
+**Situation.** A review team cannot look at every transaction. A graph model is an appealing extra, and it is easy to over-claim.
+
+**Task.** Build a review ranking with features that would have been known before the transaction, a realistic label delay, and a comparison that includes graph models without letting them silently replace the serving policy.
+
+**Actions.** Synthetic populations of 60,000 transactions over 120 days, seeds 42, 73, and 101. Time split 55/15/10/20 with a purge for a two-day label delay. Baselines: logistic regression, histogram gradient boosting, isolation forest. Neural candidates: a no-edge MLP, relational aggregation, temporal attention, and risk-gated temporal attention, with neighbors restricted to past account and device history. Isotonic calibration sits on its own time stage. Thresholds minimize validation cost under a 5% review target. The workbench keeps the logistic model as the saved decision. Graph scores stay in shadow.
+
+**Result.** Seed-42 holdout average precision is about 0.455 at a 6.1% fraud rate, and the top 5% of scores recalls about 47% of synthetic fraud. Across seeds, relational aggregation has the highest mean AP (about 0.497) and still loses the cost decision: the MLP wins two seeds and gradient boosting wins one. No real IEEE-CIS number exists.
+
+**What I would improve.** A pre-registered confirmatory window before any graph model is allowed to replace logistic. The current GNN comparison saw a benchmark whose tabular results had already been inspected.
+
+### Story F — California grid, and the model you did not add
+
+**Situation.** Five California balancing authorities, public EIA-930 hours from January through April 2026. Operators need a demand forecast and a short list of stressful hours.
+
+**Task.** Build an ELT path and a forecast benchmark, then test whether neighbor authorities and a graph-style feature set actually help.
+
+**Actions.** Airflow pipeline, PostgreSQL-ready SQL, Tableau review queue. Stress index flags hours at or above 90, which is 75 hours. Forecasts: 24-hour naive, 7-day moving average, Prophet, LightGBM with lags at 1, 24, and 168 hours. Granger tests on authority pairs. A second LightGBM adds correlation-weighted and neighbor features. LDWP is reported with an adjusted MAPE because raw MAPE explodes when demand is small.
+
+**Result.** LightGBM MAPE is 3.29% across CISO, BANC, TIDC, and IID, against a naive 11.05% and Prophet 16.8%. Per authority the LightGBM figures are 2.18%, 2.51%, 2.84%, and 2.92%. All 20 Granger pairs are significant and the average correlation is about 0.48, and the spatial model is worse: 3.47% MAPE. The recommendation is to keep the simpler forecast. LDWP's raw 303% MAPE is an adjusted 2.39% once demand is at least 250 MW.
+
+**What I would improve.** Retire the draft resume bullets in that repo. They quote different MAPEs than the README. Also correct the public site's "1.87%–4.33%" range so it matches the table.
+
+### Story G — Excel and SQL as one system
+
+**Situation.** Two reporting problems: a 9,994-line Superstore extract, and a synthetic department budget that has to survive both a workbook and a database.
+
+**Task.** Make the dashboard number equal the query number, and define metrics so a slicer cannot silently change the definition.
+
+**Actions.** Superstore: Power Query staging, a fact and dimension layer, PivotTables, and a Python check of 25 source-to-staging rules. Profit margin is total profit divided by total sales. Civic: `SUMIFS` for the fiscal-year expense total, a Base/Constrained switch that moves forecasts and leaves actuals fixed, and a recursive SQLite CTE that compounds growth in integer cents. `DENSE_RANK` ranks tied overspends. Seventy-five saved workbook forecasts match SQL.
+
+**Result.** Superstore sales $2,297,201, profit $286,397, margin 12.47%. Discount bands above 32% are associated with losses of about $46k and $77k. Tables lose about $17.7k. Civic Base scenario: $325,050 over the $7.22M expense budget, and a modeled two-year funding gap of about $786k. Both are descriptive. The civic figures are fictional by construction.
+
+**What I would improve.** Say "Excel is a snapshot, not a live connection" before anyone asks how the workbook refreshes. For Superstore, the next real step is a controlled discount test. The association is not a pricing policy.
+
+### If they ask about STP 499
+
+> I am the undergraduate researcher on signed and directed GNN stability with Dr. Yixuan He. The experiments run on ASU's Sol cluster. The question is how MSGNN, MagNet, and the signed models move when we flip signs, reverse directions, or delete edges. What I can show today is that the environments construct and the parameters initialize finite. I cannot show a robustness result yet, and I do not treat the old Cora sandbox numbers as manuscript evidence. Bitcoin-Alpha and Bitcoin-OTC are signed trust networks in the candidate data list. They are not fraud-label datasets.
 
 ### Likely rapid-fire follow-ups, with short answers
 
@@ -841,26 +941,26 @@ No fraud, grid-risk, PySpark, or GNN project is in this workspace. Do not tell t
 
 | Priority | Gap | Why it will come up | What "good enough" looks like |
 | --- | --- | --- | --- |
-| 1 | SQL, including windows and `EXPLAIN` | Almost every DS screen has a SQL round. You have zero `.sql` files. | Write the contract-rate, ChargeRatio, and top-20% capture queries in this guide from a blank editor in under 15 minutes. |
-| 2 | Inference: intervals, tests, effect sizes | You quote 42.7% and 2.9% with no interval. A stats interviewer will ask. | Compute the Wald intervals in §2.4 without notes. Choose chi-square vs t vs ANOVA vs logistic for six spoken scenarios. |
-| 3 | Experiment design | Your best slide depends on a save rate you did not measure. | Design the within-list pilot, including the sample-size arithmetic, and explain why peeking breaks it. |
-| 4 | Excel under time pressure | Analyst loops still hand you a workbook. | Rebuild the contract pivot and the ROI data table from the CSV in under 30 minutes. |
-| 5 | Regression diagnostics and odds ratios | You shipped logistic regression as a score and never read a coefficient. | Refit an **unweighted** logistic pipeline, print odds ratios for contract and fiber, and say what class weights would have done to them. |
-| 6 | A second validation habit | One seed, one split. | Rerun the champion at two more seeds and report the range of PR-AUC and capture@20%. If you lack time to retrain Optuna, rerun the frozen hyperparameters. |
-| 7 | Unsupervised and SQL-style product metrics | Not in the project. Common in screens. | One k-means or PCA notebook you can describe honestly as practice, plus a retention-cohort query. |
-| 8 | Spark, fraud, GNN | Only if the job post lists them. | A one-page spoken boundary of what you have not done, plus the transferable leakage and metric rules. Do not fake a project. |
+| 1 | One consistent set of numbers | The website, `resume_bullets.md`, and the READMEs disagree on MAPE and on the churn UI. | Recite the repository table in this guide. If shown the website, correct it. |
+| 2 | Inference: intervals, tests, effect sizes | You quote rates, MAPEs, and a Granger "20/20" more often than an interval. GridGuard's bootstrap is the exception. | Wald intervals for the churn contract rates without notes. State what the GridGuard interval does not cover. |
+| 3 | Experiment design | Churn ROI, Superstore discount losses, and FraudScope costs are all scenarios or associations. | The within-list churn pilot, plus a one-paragraph discount test for the Superstore bands. |
+| 4 | ANOVA and OLS diagnostics | Still no ANOVA file. Logistic coefficients are still unpublished. | Choose the test in six spoken scenarios. Refit unweighted churn logistic and read contract odds ratios. |
+| 5 | STP 499 scope control | A research title is easy to over-claim. | Two-minute status: what Sol has verified, what is not yet a result. |
+| 6 | Sealed tests | GridGuard's 1M test is unevaluated. FraudScope's graph comparison is exploratory. | Practice saying "validation" and "holdout" as different words. |
+| 7 | `Desktop/ASU` coursework | Not on this machine. Civic mentions Excel and database coursework without including the assignments. | If those folders are opened later, add course codes. Do not invent them. |
+| 8 | Private `edge-state-visibility-code` | Listed on the account. Clone failed from this environment. | Leave it out until you can open it. |
 
-You do **not** need three weeks of generic XGBoost tutorials. The tree model is the part you can already defend.
+SQL, Excel, PySpark, fraud ranking, and time-series backtests are no longer empty cells. The work is to tell them at the right strength. You do not need a generic XGBoost tutorial.
 
 ### Week 1 — Make the missing fundamentals speak your project
 
-**Days 1–2. SQL.** Load the CSV into PostgreSQL or SQLite. Write, in this order: churn rate by contract with share of churners, median tenure by contract and churn using `PERCENTILE_CONT` or a SQLite equivalent, `ChargeRatio` with `COALESCE`, top 20% capture with `ROW_NUMBER`, and exposure with a filter on a score table. Then `EXPLAIN` the capture query and describe one index you would add if the table grew to usage events. Redo the two queries you stumbled on the next morning.
+**Days 1–2. SQL you already wrote, said out loud.** Rebuild from memory the civic recursive forecast CTE, the rec-park definitions of turnaround and backlog, and the California high-priority queue. Then write the churn contract-rate and top-20% capture queries in the same style. `EXPLAIN` one of them.
 
 **Days 3–4. Inference on numbers you already trust.** By hand or in a few lines of Python, interval for 1,869/7,043, interval for 1,326/3,102, interval for 39/1,359. Chi-square on the training contract table. Write five sentences that pair each interval with the causal caveat. Do ten "which test?" flash cards: binary vs continuous, two groups vs three, paired vs unpaired, rare cells vs large cells.
 
 **Day 5. Experiments.** Derive the 353-per-arm figure in §2.5 from the formula without looking, then change δ from 10 points to 5 points and watch n quadruple, because δ is squared. Write the pilot protocol on one page: population, eligibility, assignment, primary metric, guardrails, horizon, sample size, peeking rule. This page becomes Story C's improvement paragraph.
 
-**Days 6–7. Excel.** Power Query the raw CSV. Pivot contract rates. Two-way data table on save rate and contact cost that reproduces net ≈ $37,043 at 35% and $50. Say the refresh steps out loud.
+**Days 6–7. Excel.** Walk the Superstore workbook from Power Query to the profitability pivot without opening the README. Then switch the civic Assumptions cell from Base to Constrained and explain why actuals stay put. Add the churn ROI data table only after those two demos are fluent.
 
 ### Week 2 — Deepen the model you already have
 
@@ -872,7 +972,7 @@ You do **not** need three weeks of generic XGBoost tutorials. The tree model is 
 
 **Day 12. Explanations under questioning.** Practice the waterfall from memory: base margin about 0.02, ChargeRatio +0.66, month-to-month +0.46, fiber +0.26, tenure +0.21, electronic check +0.17, total margin 2.96, probability 95.1%. Then the cohort punchline: do not offer a term upgrade to people whose term is already the protective feature.
 
-**Days 13–14. Story reps.** Tell Story A, B, and C into a timer at 3 minutes and at 60 seconds. Record the 60-second version. Cut any sentence that starts with the library name.
+**Days 13–14. Story reps.** Rotate A, D, E, and F. Sixty seconds each, then a three-minute version of D and E. Cut any sentence that starts with the library name. End each story with the limitation: sealed test, synthetic labels, or spatial features that lost.
 
 ### Week 3 — Interview reps and the holes that match the job post
 
@@ -880,9 +980,9 @@ You do **not** need three weeks of generic XGBoost tutorials. The tree model is 
 
 **Day 17. ANOVA and regression drills.** One-way ANOVA vocabulary on a tenure-by-contract question. Two-way interaction in one paragraph. VIF and the r = 0.83 pair. Odds ratio versus SHAP, and when you would show each.
 
-**Day 18. Unsupervised, small and honest.** Standardize the numeric columns on the training set only. k-means with k from 2 to 6. If the segments line up with contract and fiber, say that the clusters recovered the EDA. If they do not, say that too. This is practice, and you will label it as practice.
+**Day 18. Graphs, at the strength of the files.** One pass on FraudScope's shadow GNN (why it did not replace logistic) and one pass on STP 499 (what Sol has and has not verified). California grid's "GNN not justified" sentence belongs in the same hour: dependence can be real and still not improve the forecast.
 
-**Days 19–20. Job-specific gap.** If the posting emphasizes product experiments, redo Week 1's pilot page and add a sequential-testing definition. If it emphasizes analytics engineering, spend the time on window functions and `EXPLAIN`. If it emphasizes ML, spend it on the seed-stability table and the cost-weighted threshold. If it emphasizes deep learning or graphs, prepare a clear boundary rather than a weekend crash course you might misrepresent.
+**Days 19–20. Job-specific gap.** Product experiments: the churn pilot plus a Superstore discount test. Analytics engineering: civic CTE and the grid SQL. ML or Spark: GridGuard's scenario split and the sealed test. Research roles: STP 499 status, without borrowing Cora sandbox numbers.
 
 **Day 21. Mock loop.** Hour 1: SQL. Hour 2: your project, with a hostile question on calibration and a hostile question on causality. Hour 3: a take-home style explanation of the three numbers 282, 190, and 10% break-even, written for a VP.
 
@@ -890,7 +990,7 @@ You do **not** need three weeks of generic XGBoost tutorials. The tree model is 
 
 - Every mock answer that uses a number must use a number from the locked table, or you say you are approximating.
 - Every ROI sentence includes the save-rate assumption in the same breath.
-- When you do not have a project, say what you would do and what you have already done that is analogous. The analogous work is this churn analysis.
+- When a result is unfinished, say the verified slice. STP 499 is the template: constructors on Sol, no robustness claim yet.
 
 ---
 
@@ -1061,4 +1161,4 @@ Copy any of these into Cursor when you want to go deeper. They assume this guide
 
 4. **Pilot design review.** "Design the randomized save-rate pilot for the top 20% list, with sample size, a primary metric, guardrails, and a no-peeking rule. Use my break-even save rate of about 10% as the effect I care about, and tell me where my 282-person holdout list is too small."
 
-5. **Hostile mock on Story B.** "Interview me for 20 minutes as a skeptical hiring manager. Push on class weights versus SMOTE, the CV 0.674 versus holdout 0.658, SHAP versus causation, and the 95.1% to 69.3% what-if. Grade each answer against `docs/interview-study-guide.md` and quote the file I should have cited."
+5. **Hostile mock across projects.** "Interview me for 20 minutes. Rotate churn calibration, GridGuard's sealed test, FraudScope's decision to keep logistic over the GNN, the California spatial-feature loss, and the STP 499 status. Grade each answer against `docs/interview-study-guide.md` and flag any number that matches the website but not the repository."
